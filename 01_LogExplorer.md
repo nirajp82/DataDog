@@ -198,12 +198,13 @@ Use CIDR to filter IP ranges.
 
 ### Examples
 
-```
-CIDR(@network.client.ip, 13.0.0.0/8)
-CIDR(@network.ip.list, 13.0.0.0/8, 15.0.0.0/8)
-source:pan.firewall evt.name:reject CIDR(@network.client.ip, 13.0.0.0/8)
-source:vpc NOT(CIDR(@network.client.ip, 13.0.0.0/8)) CIDR(@network.destination.ip, 15.0.0.0/8)
-```
+| Query Example                                                                                    | Meaning (simple & clear)                                                                                               | Example IPs                                    |
+| ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `CIDR(@network.client.ip, 13.0.0.0/8)`                                                           | Matches logs where **@network.client.ip** is inside the **13.0.0.0/8** network range.                                  | 13.0.1.5, 13.25.100.200, 13.255.255.1          |
+| `CIDR(@network.ip.list, 13.0.0.0/8, 15.0.0.0/8)`                                                 | Matches logs where **any IP in @network.ip.list** falls in **13.0.0.0/8** **or** **15.0.0.0/8**.                       | 13.1.2.3, 15.0.0.10, 15.50.20.30               |
+| `source:pan.firewall evt.name:reject CIDR(@network.client.ip, 13.0.0.0/8)`                       | Filters firewall reject events **AND** where the client IP is in **13.0.0.0/8**.                                       | 13.10.20.30, 13.200.1.1                        |
+| `source:vpc NOT(CIDR(@network.client.ip, 13.0.0.0/8)) CIDR(@network.destination.ip, 15.0.0.0/8)` | Matches VPC logs where the client IP is **NOT** in **13.0.0.0/8** **and** the destination IP **is** in **15.0.0.0/8**. | Client IP: 12.5.6.7 → Destination IP: 15.1.2.3 |
+
 
 Supports IPv4 and IPv6.
 
