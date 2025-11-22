@@ -51,7 +51,8 @@ Everything in this document builds on those core principles.
 | Term Type   | Example         | Meaning                          |
 | ----------- | --------------- | -------------------------------- |
 | Single term | `hello`         | Matches “hello” anywhere allowed |
-| Sequence    | `"hello world"` | Matches the exact phrase         |
+| Sequence    | `"hello world"` | Matches the exact phrase. Sequence: `"hello world"` — Matches the **exact phrase exactly as written**.
+You **don’t need to escape the space** because anything inside double quotes is treated as a literal phrase, so special characters (including spaces) are not interpreted as operators.|
 
 ### Tag & Attribute Formats
 
