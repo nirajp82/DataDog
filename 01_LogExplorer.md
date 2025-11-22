@@ -8,7 +8,7 @@ This documentation explains **all supported search syntax**, including tags, att
 # Table of Contents
 
 1. [Overview](#overview)
-2. [Fields Coverage (with Examples)](#fields-coverage-with-examples)
+2. [Fields Coverage](#fields-coverage)
 3. [Search Term Basics](#search-term-basics)
 4. [Wildcard Search](#wildcard-search)
 5. [Boolean Operators](#boolean-operators)
