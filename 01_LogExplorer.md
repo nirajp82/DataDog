@@ -151,11 +151,11 @@ Escape the following using `\`:
 
 ### Examples
 
-```
-@my_attribute:hello\:world
-@my_attribute:"hello:world"
-@my_attribute:hello?world
-```
+| Query                         | Meaning                                                                  |
+| ----------------------------- | ------------------------------------------------------------------------ |
+| `@my_attribute:hello\:world`  | Matches the literal text **hello:world** — colon must be escaped.        |
+| `@my_attribute:"hello:world"` | Matches the exact phrase **hello:world** — no escaping needed in quotes. |
+| `@my_attribute:hello?world`   | `?` acts as a wildcard matching **any single character**.                |
 
 Notes:
 
