@@ -1,7 +1,3 @@
-Got it! I’ve rewritten your full README, improving clarity on **fields searched, case sensitivity, full-text vs attribute search, and examples**, and made it logically structured. Here’s the final version ready for your use:
-
----
-
 # Log Explorer
 
 Log Explorer is the central interface for querying, filtering, and analyzing your ingested logs.
@@ -12,7 +8,7 @@ This documentation explains **all supported search syntax**, including tags, att
 # Table of Contents
 
 1. [Overview](#overview)
-2. [Quick Examples](#quick-examples)
+2. [Fields Coverage (with Examples)](#fields-coverage-with-examples)
 3. [Search Term Basics](#search-term-basics)
 4. [Wildcard Search](#wildcard-search)
 5. [Boolean Operators](#boolean-operators)
@@ -24,7 +20,6 @@ This documentation explains **all supported search syntax**, including tags, att
 11. [Tag Search](#tag-search)
 12. [Array Search](#array-search)
 13. [Calculated Fields](#calculated-fields)
-14. [Cheat Sheet](#cheat-sheet)
 
 ---
 
@@ -32,45 +27,37 @@ This documentation explains **all supported search syntax**, including tags, att
 
 Log Explorer lets you search logs using:
 
-| Type           | Syntax                   | Description & Fields Searched                                                                                                                                              |
-| -------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Tags**       | `key:value`              | Search logs with a specific tag. Only the **tags** are searched. Case-sensitive.                                                                                           |
-| **Attributes** | `@key:value`             | Search logs with a specific attribute. Only **attributes** are searched. Case-sensitive.                                                                                   |
-| **Full-text**  | `*:value`                | Search **across all fields**, including **log messages, tags, and attributes**. Case-insensitive for log messages, case-sensitive for tags/attributes. Matches substrings. |
-| **Wildcards**  | `*` and `?`              | Partial matches. `*` matches multiple characters, `?` matches a single character. Works in **log messages** and attribute values. Wildcards do **not** work inside quotes. |
-| **Phrases**    | `"multiple words"`       | Exact phrase search. Searches **log messages** only. Spaces and special characters are treated literally inside quotes.                                                    |
-| **Boolean**    | `AND, OR, -`             | Combine or exclude terms. Applies to **log messages by default**. `AND` ensures both terms exist, `OR` allows either, `-` excludes terms.                                  |
-| **CIDR**       | `CIDR(attribute, block)` | Filter IP ranges. Only searches **attributes containing IPs**. Supports IPv4 and IPv6.                                                                                     |
+| Type           | Syntax                   | Description & Fields Searched                                                                                                                                                               |
+| -------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Tags**       | `key:value`              | Search logs with a specific tag. Only the **tags** are searched. Case-sensitive.                                                                                                            |
+| **Attributes** | `@key:value`             | Search logs with a specific attribute. Only **attributes** are searched. Case-sensitive.                                                                                                    |
+| **Full-text**  | `*:value`                | Search **across all fields**, including **log messages, tags, and attributes**. Case-insensitive for log messages; tags/attributes are searched in their original case. Matches substrings. |
+| **Wildcards**  | `*` and `?`              | Partial matches. `*` matches multiple characters, `?` matches a single character. Works in **log messages** and attribute values. Wildcards do **not** work inside quotes.                  |
+| **Phrases**    | `"multiple words"`       | Exact phrase search. Searches **log messages** only. Spaces and special characters are treated literally inside quotes.                                                                     |
+| **Boolean**    | `AND, OR, -`             | Combine or exclude terms. Applies to **log messages by default**. `AND` ensures both terms exist, `OR` allows either, `-` excludes terms.                                                   |
+| **CIDR**       | `CIDR(attribute, block)` | Filter IP ranges. Only searches **attributes containing IPs**. Supports IPv4 and IPv6.                                                                                                      |
 
 > **Case behavior**:
 >
 > * Log messages: **case-insensitive**
 > * Tags / Attributes: **case-sensitive**
-> * Full-text (`*:`): **case-insensitive** across messages, tags, and attributes
+> * Full-text (`*:`): **case-insensitive** across log messages, tags, and attributes
 
 ---
 
-# Quick Examples
+# Fields Coverage (with Examples)
 
-| Query                   | Matches in                 | Example Logs / Tags / Attributes                                                 | Notes                                                                                                 |
-| ----------------------- | -------------------------- | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `hello`                 | Log message only           | `"Hello World"`, `"say hello"`                                                   | Case-insensitive; **does not match tags/attributes** unless using full-text (`*:`)                    |
-| `service:webstore`      | Tag only                   | Tag `service:webstore`                                                           | Case-sensitive; log messages ignored                                                                  |
-| `@http.method:POST`     | Attribute only             | Attribute `@http.method:POST`                                                    | Case-sensitive; log messages ignored                                                                  |
-| `*:hello`               | All fields                 | Log message: `"Hello world"`<br>Tag: `greeting:hello`<br>Attribute: `@msg:hello` | Case-insensitive in log messages, tags, attributes                                                    |
-| `"user login"`          | Log message only           | `"User login successful"`                                                        | Exact phrase match; quotes required; does not match tags/attributes unless `*:` used                  |
-| `A AND B`               | Log message (by default)   | Log containing `"A"` and `"B"`                                                   | Boolean AND; case-insensitive in log messages; tags/attributes only if explicitly searched            |
-| `A OR B`                | Log message (by default)   | Log containing `"A"` or `"B"`                                                    | Boolean OR                                                                                            |
-| `A -B`                  | Log message (by default)   | Log contains `"A"` but excludes `"B"`                                            | Boolean NOT                                                                                           |
-| `*test*`                | Log message and attributes | `"unit test passed"`, attribute `@name:mytest`                                   | Wildcard `*`; matches multiple characters; case-insensitive in messages, case-sensitive in attributes |
-| `@url:/api/v1/*`        | Attribute only             | Attribute `@url:/api/v1/users`                                                   | Wildcards work in attributes; case-sensitive                                                          |
-| `CIDR(@ip, 10.0.0.0/8)` | Attribute only             | Attribute `@ip:10.12.3.4`                                                        | Matches IPv4 or IPv6 in the given range                                                               |
+| Search Type            | Log Message Example          | Tag Example            | Attribute Example                 | Case Behavior & Explanation                                                                                                 |
+| ---------------------- | ---------------------------- | ---------------------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **Tag**                | ❌                            | `service:webstore`     | ❌                                 | Case-sensitive. Only searches **tags**. Does **not** match log messages or attributes.                                      |
+| **Attribute**          | ❌                            | ❌                      | `@http.method:POST`               | Case-sensitive. Only searches **attributes**. Does **not** match log messages or tags.                                      |
+| **Full-text**          | `Error: failed login`        | `service:webstore`     | `@http.method:POST`               | Case-insensitive for log messages; matches **tags and attributes as well**. Substrings match (`helloWorld`, `Hello world`). |
+| **Phrase / Sequence**  | `"login failed"`             | ❌                      | ❌                                 | Case-insensitive in **log messages only**. Use `*:"login failed"` for full-text across all fields.                          |
+| **Boolean (AND/OR/-)** | `authentication AND failure` | `env:prod OR env:test` | `@http.status_code:200 -@debug:*` | Log messages are case-insensitive. Tags/attributes searched **only if explicitly mentioned**.                               |
+| **Wildcard**           | `*error*`                    | `service:web*`         | `@http.url:/api/*`                | Works **outside quotes**. Log messages: case-insensitive. Tags/attributes: case-sensitive.                                  |
 
-> **Tip:**
->
-> * Use `*:` for **full-text search** across all fields.
-> * Boolean operators (`AND`, `OR`, `-`) apply to **log messages by default**, not tags/attributes.
-> * Attribute and tag searches are **case-sensitive** unless using `*:`.
+> ✅ Field is searched
+> ❌ Field is not searched
 
 ---
 
@@ -80,19 +67,6 @@ Log Explorer lets you search logs using:
 | ----------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Single term | `hello`         | Matches anywhere in **log message**, case-insensitive. Substrings match: `helloWorld`, `Hello world`. Does **not** match in tags/attributes unless using full-text (`*:`) |
 | Sequence    | `"hello world"` | Matches **exact phrase** in **log message**, case-insensitive. Does not match in tags/attributes unless using full-text (`*:"hello world"`)                               |
-
-### Tag & Attribute Formats
-
-| Type      | Format       | Example             | Matches in      | Case Sensitivity |
-| --------- | ------------ | ------------------- | --------------- | ---------------- |
-| Tag       | `key:value`  | `service:frontend`  | Tags only       | Case-sensitive   |
-| Attribute | `@key:value` | `@http.method:POST` | Attributes only | Case-sensitive   |
-
-**Example Query:**
-
-```
-service:webstore @http.method:POST
-```
 
 ---
 
@@ -112,11 +86,11 @@ Wildcards work **only outside quotes**.
 
 # Boolean Operators
 
-| Operator | Example                        | Behavior & Explanation                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| -------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `AND`    | `authentication AND failure`   | Logs **must contain both terms** to match. <br>**Fields affected:** <br>- **Log messages:** searched automatically, **case-insensitive**. <br>- **Tags/Attributes:** searched **only if explicitly mentioned**, and **case-sensitive**. <br>**Example:** `authentication AND failure` will match a log message containing `"User authentication failure"` but **will not** match a tag `Service:AuthenticationFailure` unless you explicitly include it. |
-| `OR`     | `authentication OR password`   | Logs **must contain either term**. <br>**Fields affected:** same as above. <br>**Example:** matches a log message `"authentication succeeded"` or `"password expired"`; will not match tags/attributes unless explicitly included.                                                                                                                                                                                                                       |
-| `-`      | `authentication AND -password` | Includes logs that contain `"authentication"` **but exclude** `"password"`. <br>**Fields affected:** <br>- Log messages: case-insensitive search. <br>- Tags/Attributes: only if explicitly searched. <br>**Example:** a log message `"authentication failed for user"` is included, but `"authentication failed due to password policy"` is excluded.                                                                                                   |
+| Operator | Example                        | Behavior & Explanation                                                                                                                                                                                                                                                                                                                                                                |
+| -------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `AND`    | `authentication AND failure`   | Logs **must contain both terms** to match. <br>**Fields affected:** <br>- **Log messages:** searched automatically, **case-insensitive**. <br>- **Tags/Attributes:** searched **only if explicitly mentioned**, and **case-sensitive**. <br>**Example:** `"User authentication failure"` matches log message, but not tag `Service:AuthenticationFailure` unless explicitly included. |
+| `OR`     | `authentication OR password`   | Logs **must contain either term**. <br>**Fields affected:** same as above. <br>**Example:** matches `"authentication succeeded"` or `"password expired"`; will not match tags/attributes unless explicitly included.                                                                                                                                                                  |
+| `-`      | `authentication AND -password` | Includes logs that contain `"authentication"` **but exclude** `"password"`. <br>**Fields affected:** log messages case-insensitive; tags/attributes only if explicitly searched. <br>**Example:** `"authentication failed for user"` included, `"authentication failed due to password policy"` excluded.                                                                             |
 
 **Example Queries:**
 
@@ -169,8 +143,7 @@ Escape using `\`:
 | `@http.status_code:[200 TO 299]`        | Status 200–299                    |
 | `-@http.status_code:*`                  | Exclude logs with any status code |
 
-> Attribute searches are **case-sensitive**. For case-insensitive search, use **full-text (`*:value`)**.
-> Attribute search only searches the specified attribute. Log message and other fields are ignored.
+> Attribute searches are case-sensitive. For case-insensitive search, use full-text (`*:value`).
 
 ---
 
@@ -208,7 +181,7 @@ Escape using `\`:
 | `(env:prod AND -version:beta)` | Environment = prod, excluding beta version |
 | `tags:<MY_TAG>`                | Legacy tag search                          |
 
-> Tags are **case-sensitive**. Tag search only searches the **tag fields**.
+> Tags are case-sensitive.
 
 ---
 
@@ -228,47 +201,4 @@ Escape using `\`:
 | `#latency:>500` | Calculated field latency > 500 |
 
 > Can be used in search, visualization, aggregation, or nested calculated fields
-
-
-# Cheat Sheet (Final)
-
-| Feature           | Example                                                                                          | Explanation / Notes                                                           |
-| ----------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| Tag               | `service:webstore`                                                                               | Logs with `service:webstore`, case-sensitive                                  |
-| Tag               | `env:prod`                                                                                       | Environment = prod                                                            |
-| Tag               | `tags:<LEGACY_TAG>`                                                                              | Legacy tag search                                                             |
-| Attribute         | `@http.method:POST`                                                                              | Logs with POST method, case-sensitive                                         |
-| Attribute         | `@url:/api/v1/*`                                                                                 | URL starts with `/api/v1/`, case-sensitive                                    |
-| Attribute         | `@http.status_code:[200 TO 299]`                                                                 | Status 200–299                                                                |
-| Attribute         | `-@debug:*`                                                                                      | Exclude debug logs                                                            |
-| Phrase / Sequence | `"user login"`                                                                                   | Exact phrase search in log messages; use full-text (`*:`) for tags/attributes |
-| Wildcard `*`      | `*test*`                                                                                         | Contains `test`                                                               |
-| Wildcard `?`      | `hello?world`                                                                                    | Single-character wildcard                                                     |
-| Boolean AND       | `A AND B`                                                                                        | Logs containing both A and B                                                  |
-| Boolean OR        | `A OR B`                                                                                         | Logs containing either A or B                                                 |
-| Boolean NOT       | `A -B`                                                                                           | Logs containing A, excluding B                                                |
-| Full-text         | `*:error`                                                                                        | Search all attributes, tags, and log messages, case-insensitive               |
-| Full-text         | `*:login*`                                                                                       | Attributes/log messages starting with `login`                                 |
-| Full-text         | `*:"hello world"`                                                                                | Exact phrase across all attributes and log messages                           |
-| Escaping          | `@my_attribute:hello\:world`                                                                     | Escape colon                                                                  |
-| Escaping          | `@my_attribute:"hello:world"`                                                                    | Exact phrase, no escape needed                                                |
-| Escaping          | `@my_attribute:hello?world`                                                                      | Single-character wildcard                                                     |
-| CIDR              | `CIDR(@ip, 10.0.0.0/8)`                                                                          | IP in 10.0.0.0/8 range                                                        |
-| CIDR              | `CIDR(@network.client.ip, 13.0.0.0/8)`                                                           | Client IP in 13.0.0.0/8                                                       |
-| CIDR              | `CIDR(@network.ip.list, 13.0.0.0/8, 15.0.0.0/8)`                                                 | Any IP in list in 13.x or 15.x                                                |
-| CIDR              | `source:vpc NOT(CIDR(@network.client.ip, 13.0.0.0/8)) CIDR(@network.destination.ip, 15.0.0.0/8)` | Client not in 13.x, destination in 15.x                                       |
-| Numerical         | `@latency:>100`                                                                                  | Latency > 100                                                                 |
-| Numerical         | `@status:[400 TO 499]`                                                                           | Status code 400–499                                                           |
-| Array             | `users.names:Peter`                                                                              | Array contains Peter                                                          |
-| Array             | `@Event.EventData.Data.Name:ObjectServer`                                                        | JSON object field Name = ObjectServer                                         |
-| Calculated        | `#duration:>500`                                                                                 | Calculated field > 500                                                        |
-
----
-
-This version is **fully clear** on:
-
-* Which **fields are searched** (log messages, tags, attributes)
-* Case sensitivity rules
-* Full-text search behavior
-* Boolean operator behavior
 
