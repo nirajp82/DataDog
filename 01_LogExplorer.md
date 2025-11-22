@@ -84,11 +84,11 @@ Wildcards work **only outside quotes**.
 
 # Boolean Operators
 
-| Operator | Example                        | Behavior & Explanation                                                                            |
-| -------- | ------------------------------ | ------------------------------------------------------------------------------------------------- |
-| `AND`    | `authentication AND failure`   | Logs must contain **both terms**. Log messages: case-insensitive; tags/attributes: case-sensitive |
-| `OR`     | `authentication OR password`   | Logs must contain **either term**                                                                 |
-| `-`      | `authentication AND -password` | Include first, exclude second                                                                     |
+| Operator | Example                        | Behavior & Explanation                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| -------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `AND`    | `authentication AND failure`   | Logs **must contain both terms** to match. <br>**Fields affected:** <br>- **Log messages:** searched automatically, **case-insensitive**. <br>- **Tags/Attributes:** searched **only if explicitly mentioned**, and **case-sensitive**. <br>**Example:** `authentication AND failure` will match a log message containing `"User authentication failure"` but **will not** match a tag `Service:AuthenticationFailure` unless you explicitly include it. |
+| `OR`     | `authentication OR password`   | Logs **must contain either term**. <br>**Fields affected:** same as above. <br>**Example:** matches a log message `"authentication succeeded"` or `"password expired"`; will not match tags/attributes unless explicitly included.                                                                                                                                                                                                                       |
+| `-`      | `authentication AND -password` | Includes logs that contain `"authentication"` **but exclude** `"password"`. <br>**Fields affected:** <br>- Log messages: case-insensitive search. <br>- Tags/Attributes: only if explicitly searched. <br>**Example:** a log message `"authentication failed for user"` is included, but `"authentication failed due to password policy"` is excluded.                                                                                                   |
 
 **Example Queries:**
 
