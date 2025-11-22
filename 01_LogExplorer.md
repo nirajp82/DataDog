@@ -1,13 +1,13 @@
 # Log Explorer
 
 Log Explorer is the central interface for querying, filtering, and analyzing your ingested logs.
-This documentation explains **all supported search syntax**, including tags, attributes, full-text search, Boolean logic, CIDR queries, wildcards, numerical filters, and more.
+This documentation explains **all supported search syntax**, including tags, attributes, full-text search, Boolean logic, CIDR queries, wildcards, numerical filters, arrays, calculated fields, and more.
 
 Visual diagrams and examples are included throughout.
 
 ---
 
-# **TABLE OF CONTENTS**
+# Table of Contents
 
 1. [Overview](#overview)
 2. [Search Term Basics](#search-term-basics)
@@ -26,33 +26,28 @@ Visual diagrams and examples are included throughout.
 
 ---
 
-# 📌 **Overview**
+# 📌 Overview
 
 Log Explorer lets you search logs using:
 
-```
-tags         → key:value
-attributes   → @key:value
-full-text    → *:value
-wildcards    → * and ?
-phrases      → "multiple words"
-Boolean      → AND, OR, -
-CIDR         → CIDR(attribute, block)
-```
-
-Everything in this document builds on those core principles.
+| Type       | Syntax                   | Description                               |
+| ---------- | ------------------------ | ----------------------------------------- |
+| Tags       | `key:value`              | Search logs with a specific tag           |
+| Attributes | `@key:value`             | Search logs with an attribute             |
+| Full-text  | `*:value`                | Search across all fields and message text |
+| Wildcards  | `*` and `?`              | Partial matches                           |
+| Phrases    | `"multiple words"`       | Exact phrase search                       |
+| Boolean    | `AND`, `OR`, `-`         | Combine or exclude terms                  |
+| CIDR       | `CIDR(attribute, block)` | Filter IP ranges                          |
 
 ---
 
-# **Search Term Basics**
+# Search Term Basics
 
-### There are two types of search terms:
-
-| Term Type   | Example         | Meaning                                                                                                                                                                                                                                    |
-| ----------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Single term | `hello`         | Matches “hello” anywhere allowed.                                                                                                                                                                                                          |
-| Sequence    | `"hello world"` | Matches the **exact phrase exactly as written**. You **don’t need to escape the space** because everything inside double quotes is treated as a literal phrase, so special characters (including spaces) are not interpreted as operators. |
-
+| Term Type   | Example         | Meaning                                                                                            |
+| ----------- | --------------- | -------------------------------------------------------------------------------------------------- |
+| Single term | `hello`         | Matches "hello" anywhere in the log                                                                |
+| Sequence    | `"hello world"` | Matches the **exact phrase**. Spaces and special characters **do not need escaping** inside quotes |
 
 ### Tag & Attribute Formats
 
@@ -61,7 +56,7 @@ Everything in this document builds on those core principles.
 | Tag       | `key:value`  | `service:frontend`  |
 | Attribute | `@key:value` | `@http.method:POST` |
 
-**Example query:**
+**Example Query:**
 
 ```
 service:webstore @http.method:POST
@@ -69,52 +64,32 @@ service:webstore @http.method:POST
 
 ---
 
-# **Wildcard Search**
+# Wildcard Search
 
-Wildcards allow partial matches.
+Wildcards allow partial matches and work **only outside quotes**.
 
----
+| Wildcard | Example       | Meaning                                          |
+| -------- | ------------- | ------------------------------------------------ |
+| `*`      | `*test*`      | Matches any text containing "test"               |
+| `*`      | `web*`        | Matches text starting with "web"                 |
+| `*`      | `*web`        | Matches text ending with "web"                   |
+| `?`      | `hello?world` | Matches any **single character** in place of `?` |
 
-## ⭐ **Important Note (Simplified)**
-
-Wildcards only work **outside** of quotes:
-
-* `"*test*"` → searches for the **literal** text `*test*`
-* `*test*` → matches any message containing **test**
-
----
-
-### Multi-character wildcard: `*`
-
-```
-service:web*      → services beginning with "web"
-web*              → messages starting with "web"
-*web              → messages ending with "web"
-service:*mongo    → services ending in "mongo"
-*NETWORK*         → messages containing "NETWORK"
-```
-
-### Single-character wildcard: `?`
-
-Matches one special character or space:
-
-```
-@my_attribute:hello?world
-```
+> `"*test*"` → literal, does not expand wildcards
 
 ---
 
-# **Boolean Operators**
+# Boolean Operators
 
 Operators are **case-sensitive**.
 
-| Operator | Meaning                        | Example                        |
-| -------- | ------------------------------ | ------------------------------ |
-| `AND`    | All terms must match (default) | `authentication AND failure`   |
-| `OR`     | Either term may match          | `authentication OR password`   |
-| `-`      | Exclude matches                | `authentication AND -password` |
+| Operator | Meaning                        | Example                        | Explanation                                                           |
+| -------- | ------------------------------ | ------------------------------ | --------------------------------------------------------------------- |
+| `AND`    | All terms must match (default) | `authentication AND failure`   | Returns logs containing **both** "authentication" and "failure"       |
+| `OR`     | Either term may match          | `authentication OR password`   | Returns logs containing **either** "authentication" or "password"     |
+| `-`      | Exclude matches                | `authentication AND -password` | Returns logs containing "authentication" **but excluding** "password" |
 
-### Examples
+### Example Queries
 
 ```
 service:(webstore OR mobile-store) -status:info
@@ -123,161 +98,111 @@ availability-zone:(us-central1-f AND us-central1-c AND us-central1-a)
 
 ---
 
-# **Full-text Search**
+# Full-text Search
 
-Use `*:term` to search **across all attributes**, including message.
+Use `*:term` to search **across all attributes**, including the message.
 
-### Examples
-
-| Syntax            | Type      | Description                             |
+| Syntax            | Type      | Meaning                                 |
 | ----------------- | --------- | --------------------------------------- |
-| `*:hello`         | Full-text | Search all attributes for “hello”       |
+| `*:hello`         | Full-text | Search all attributes for "hello"       |
 | `hello`           | Free text | Search message, title, and error fields |
-| `*:hello*`        | Full-text | Begins with “hello”                     |
-| `*:"hello world"` | Full-text | Exact phrase match                      |
+| `*:hello*`        | Full-text | Attributes starting with "hello"        |
+| `*:"hello world"` | Full-text | Exact phrase search                     |
 
-⚠️ Not allowed in:
-Index filters, archive filters, pipeline filters, rehydration, Live Tail.
+> Not allowed in: Index filters, archive filters, pipeline filters, rehydration, Live Tail
 
 ---
 
-# **Escaping Special Characters**
+# Escaping Special Characters
 
-Escape the following using `\`:
+Escape special characters using `\`:
 
 ```
 - ! && || > >= < <= ( ) { } [ ] " * ? : \ # <space>
 ```
 
-### Examples
+| Query                         | Meaning                                               |
+| ----------------------------- | ----------------------------------------------------- |
+| `@my_attribute:hello\:world`  | Matches literal "hello:world" — colon escaped         |
+| `@my_attribute:"hello:world"` | Matches exact phrase "hello:world" — no escape needed |
+| `@my_attribute:hello?world`   | `?` acts as single-character wildcard                 |
 
-| Query                         | Meaning                                                                  |
-| ----------------------------- | ------------------------------------------------------------------------ |
-| `@my_attribute:hello\:world`  | Matches the literal text **hello:world** — colon must be escaped.        |
-| `@my_attribute:"hello:world"` | Matches the exact phrase **hello:world** — no escaping needed in quotes. |
-| `@my_attribute:hello?world`   | `?` acts as a wildcard matching **any single character**.                |
-
-Notes:
-
-* `/` is **not** a special character
-* `@` cannot be searched (reserved for attributes)
-* To search special characters in messages, parse them into attributes first
+> Notes: `/` is **not** special, `@` cannot be searched directly
 
 ---
 
-# **Attribute Search**
+# Attribute Search
 
-Attributes begin with `@`.
+| Example                                 | Meaning                           |
+| --------------------------------------- | --------------------------------- |
+| `@url:www.datadoghq.com`                | Logs with this URL                |
+| `@http.url_details.path:"/api/v1/test"` | Exact path match                  |
+| `@http.url:/api\-v1/*`                  | URL starts with `/api-v1/`        |
+| `@http.status_code:[200 TO 299]`        | Status 200–299                    |
+| `-@http.status_code:*`                  | Exclude logs with any status code |
 
-### Example
-
-```
-@url:www.datadoghq.com
-```
-
-### More Examples
-
-```
-@http.url_details.path:"/api/v1/test"
-@http.url:/api\-v1/*
-@http.status_code:[200 TO 299]
--@http.status_code:*
-```
-
-Notes:
-
-* Attribute searches are case-sensitive
-* Facets not required
-* For case-insensitive search use full-text (`*:value`)
+> Notes: Attribute searches are case-sensitive. For case-insensitive, use full-text search (`*:value`)
 
 ---
 
-# **CIDR Queries**
+# CIDR Queries
 
-Use CIDR to filter IP ranges.
+| Query Example                                                                                    | Meaning                                           | Example IPs                       |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------- | --------------------------------- |
+| `CIDR(@ip, 10.0.0.0/8)`                                                                          | IP in `10.0.0.0/8` range                          | 10.1.2.3, 10.255.255.1            |
+| `CIDR(@network.client.ip, 13.0.0.0/8)`                                                           | Client IP in `13.0.0.0/8`                         | 13.0.1.5, 13.25.100.200           |
+| `CIDR(@network.ip.list, 13.0.0.0/8, 15.0.0.0/8)`                                                 | Any IP in list in `13.x` or `15.x`                | 13.1.2.3, 15.0.0.10               |
+| `source:pan.firewall evt.name:reject CIDR(@network.client.ip, 13.0.0.0/8)`                       | Firewall reject + client IP in `13.x`             | 13.10.20.30                       |
+| `source:vpc NOT(CIDR(@network.client.ip, 13.0.0.0/8)) CIDR(@network.destination.ip, 15.0.0.0/8)` | Client IP **not** in 13.x, destination IP in 15.x | Client: 12.5.6.7 → Dest: 15.1.2.3 |
 
-### Examples
-
-| Query Example                                                                                    | Meaning (simple & clear)                                                                                               | Example IPs                                    |
-| ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| `CIDR(@network.client.ip, 13.0.0.0/8)`                                                           | Matches logs where **@network.client.ip** is inside the **13.0.0.0/8** network range.                                  | 13.0.1.5, 13.25.100.200, 13.255.255.1          |
-| `CIDR(@network.ip.list, 13.0.0.0/8, 15.0.0.0/8)`                                                 | Matches logs where **any IP in @network.ip.list** falls in **13.0.0.0/8** **or** **15.0.0.0/8**.                       | 13.1.2.3, 15.0.0.10, 15.50.20.30               |
-| `source:pan.firewall evt.name:reject CIDR(@network.client.ip, 13.0.0.0/8)`                       | Filters firewall reject events **AND** where the client IP is in **13.0.0.0/8**.                                       | 13.10.20.30, 13.200.1.1                        |
-| `source:vpc NOT(CIDR(@network.client.ip, 13.0.0.0/8)) CIDR(@network.destination.ip, 15.0.0.0/8)` | Matches VPC logs where the client IP is **NOT** in **13.0.0.0/8** **and** the destination IP **is** in **15.0.0.0/8**. | Client IP: 12.5.6.7 → Destination IP: 15.1.2.3 |
-
-
-Supports IPv4 and IPv6.
+> Supports IPv4 and IPv6
 
 ---
 
-# **Numerical Attribute Search**
+# Numerical Attribute Search
 
-Must be added as a facet first.
+| Example                | Meaning             |
+| ---------------------- | ------------------- |
+| `@latency:>100`        | Latency > 100       |
+| `@status:[400 TO 499]` | Status code 400–499 |
 
-### Examples
-
-```
-@http.response_time:>100
-@http.status_code:[400 TO 499]
-```
+> Must be added as a facet first
 
 ---
 
-# **Tag Search**
+# Tag Search
 
-### Standard tag examples
-
-```
-test
-env:(prod OR test)
-(env:prod AND -version:beta)
-```
-
-### Tags not using `key:value` format
-
-```
-tags:<MY_TAG>
-```
+| Example                        | Meaning                                    |
+| ------------------------------ | ------------------------------------------ |
+| `test`                         | Logs tagged "test"                         |
+| `env:(prod OR test)`           | Environment = prod or test                 |
+| `(env:prod AND -version:beta)` | Environment = prod, excluding beta version |
+| `tags:<MY_TAG>`                | Legacy tag search                          |
 
 ---
 
-# **Array Search**
+# Array Search
 
-Arrays are searchable.
-
-### Simple array example
-
-```
-users.names:Peter
-```
-
-### Array of JSON objects (CloudWatch example)
-
-```
-@Event.EventData.Data.Name:ObjectServer
-```
+| Example                                   | Meaning                               |
+| ----------------------------------------- | ------------------------------------- |
+| `users.names:Peter`                       | Array contains Peter                  |
+| `@Event.EventData.Data.Name:ObjectServer` | JSON object field Name = ObjectServer |
 
 ---
 
-# **Calculated Fields**
+# Calculated Fields
 
-Use `#` to reference a calculated field.
+| Example         | Meaning                        |
+| --------------- | ------------------------------ |
+| `#latency:>500` | Calculated field latency > 500 |
 
-### Example
-
-```
-#latency:>500
-```
-
-These can be used in search, visualization, aggregation, or nested calculated fields.
+> Can be used in search, visualization, aggregation, or nested calculated fields
 
 ---
 
-# 📊 **Diagrams / Visual Aids**
+# Diagrams / Visual Aids
 
----
-
-## **1. Search Flow Overview**
+## 1. Search Flow
 
 ```
 ┌──────────────────────────────┐
@@ -296,27 +221,19 @@ Tags (key:value)          Attributes (@key:value)
         Filtered Log Results
 ```
 
----
-
-## **2. Wildcard Behavior**
+## 2. Wildcard Behavior
 
 ```
 Outside quotes → wildcard active
 Inside quotes  → wildcard ignored
-
-Examples:
-  "*test*" → literal
-  *test*  → wildcard match
 ```
 
----
-
-## **3. Boolean Logic Diagram**
+## 3. Boolean Logic
 
 ```
-A AND B      → intersection
-A OR B       → union
-A - B        → A excluding B
+A AND B → intersection
+A OR B → union
+A - B → difference
 ```
 
 ```
@@ -326,90 +243,45 @@ A - B        → A excluding B
    └──────────┘       └──────────┘      └──────────┘
 ```
 
----
-
-## **4. CIDR Matching Diagram**
+## 4. CIDR Matching
 
 ```
 CIDR(@ip, 10.0.0.0/8)
-
-Checks:
- 10.x.x.x → match
- 192.x.x.x → no match
+Matches 10.x.x.x
+Does not match 192.x.x.x
 ```
 
 ---
 
-# 🧾 **CHEAT SHEET**
+# Cheat Sheet
 
-### **Basic Formats**
-
-```
-tag: value              → service:webstore
-attribute: value        → @http.method:POST
-phrase                  → "user login"
-```
-
-### **Wildcards**
-
-```
-*test*                  → contains "test"
-hello?world             → matches "hello world"
-```
-
-### **Boolean**
-
-```
-A AND B
-A OR B
-A -B
-```
-
-### **Full-text**
-
-```
-*:error
-*:login*
-*:"hello world"
-```
-
-### **Attributes**
-
-```
-@url:/api/v1/*
-@status_code:[200 TO 299]
--@debug:*
-```
-
-### **CIDR**
-
-```
-CIDR(@ip, 10.0.0.0/8)
-```
-
-### **Numerical**
-
-```
-@latency:>100
-@status:[400 TO 499]
-```
-
-### **Tags**
-
-```
-env:prod
-tags:<LEGACY_TAG>
-```
-
-### **Arrays**
-
-```
-users.names:Peter
-@Event.EventData.Data.Name:ObjectServer
-```
-
-### **Calculated Fields**
-
-```
-#duration:>500
-```
+| Feature           | Example                                                                                          | Explanation                             |
+| ----------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------- |
+| Tag               | `service:webstore`                                                                               | Logs with `service:webstore`            |
+| Tag               | `env:prod`                                                                                       | Environment = prod                      |
+| Tag               | `tags:<LEGACY_TAG>`                                                                              | Legacy tag search                       |
+| Attribute         | `@http.method:POST`                                                                              | Logs with POST method                   |
+| Attribute         | `@url:/api/v1/*`                                                                                 | URL starts with `/api/v1/`              |
+| Attribute         | `@http.status_code:[200 TO 299]`                                                                 | Status 200–299                          |
+| Attribute         | `-@debug:*`                                                                                      | Exclude debug logs                      |
+| Phrase / Sequence | `"user login"`                                                                                   | Exact phrase search                     |
+| Wildcard `*`      | `*test*`                                                                                         | Contains `test`                         |
+| Wildcard `?`      | `hello?world`                                                                                    | Single-character wildcard               |
+| Boolean AND       | `A AND B`                                                                                        | Logs containing both A and B            |
+| Boolean OR        | `A OR B`                                                                                         | Logs containing either A or B           |
+| Boolean NOT       | `A -B`                                                                                           | Logs containing A, excluding B          |
+| Full-text         | `*:error`                                                                                        | Search all attributes for `error`       |
+| Full-text         | `*:login*`                                                                                       | Attributes starting with `login`        |
+| Full-text         | `*:"hello world"`                                                                                | Exact phrase across all attributes      |
+| Escaping          | `@my_attribute:hello\:world`                                                                     | Escape colon                            |
+| Escaping          | `@my_attribute:"hello:world"`                                                                    | Exact phrase, no escape needed          |
+| Escaping          | `@my_attribute:hello?world`                                                                      | Single-character wildcard               |
+| CIDR              | `CIDR(@ip, 10.0.0.0/8)`                                                                          | IP in 10.0.0.0/8 range                  |
+| CIDR              | `CIDR(@network.client.ip, 13.0.0.0/8)`                                                           | Client IP in 13.0.0.0/8                 |
+| CIDR              | `CIDR(@network.ip.list, 13.0.0.0/8, 15.0.0.0/8)`                                                 | Any IP in list in 13.x or 15.x          |
+| CIDR              | `source:vpc NOT(CIDR(@network.client.ip, 13.0.0.0/8)) CIDR(@network.destination.ip, 15.0.0.0/8)` | Client not in 13.x, destination in 15.x |
+| Numerical         | `@latency:>100`                                                                                  | Latency > 100                           |
+| Numerical         | `@status:[400 TO 499]`                                                                           | Status code 400–499                     |
+| Array             | `users.names:Peter`                                                                              | Array contains Peter                    |
+| Array             | `@Event.EventData.Data.Name:ObjectServer`                                                        | JSON object field Name = ObjectServer   |
+| Calculated        | `#duration:>500`                                                                                 | Calculated field > 500                  |
