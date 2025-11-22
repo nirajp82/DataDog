@@ -45,7 +45,7 @@ Log Explorer lets you search logs using:
 
 ---
 
-# Fields Coverage (with Examples)
+# Fields Coverage
 
 | Search Type            | Log Message Example          | Tag Example            | Attribute Example                 | Case Behavior & Explanation                                                                                                 |
 | ---------------------- | ---------------------------- | ---------------------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
