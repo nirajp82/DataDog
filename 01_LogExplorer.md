@@ -28,15 +28,17 @@ This documentation explains **all supported search syntax**, including tags, att
 
 Log Explorer lets you search logs using:
 
-| Type       | Syntax                   | Description                               |
-| ---------- | ------------------------ | ----------------------------------------- |
-| Tags       | `key:value`              | Search logs with a specific tag           |
-| Attributes | `@key:value`             | Search logs with an attribute             |
-| Full-text  | `*:value`                | Search across all fields and message text |
-| Wildcards  | `*` and `?`              | Partial matches                           |
-| Phrases    | `"multiple words"`       | Exact phrase search                       |
-| Boolean    | `AND`, `OR`, `-`         | Combine or exclude terms                  |
-| CIDR       | `CIDR(attribute, block)` | Filter IP ranges                          |
+| Type           | Syntax                   | Description & Fields Searched                                                                                                                                              |
+| -------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Tags**       | `key:value`              | Search logs with a specific tag. Only the **tags** are searched. Case-sensitive.                                                                                           |
+| **Attributes** | `@key:value`             | Search logs with a specific attribute. Only **attributes** are searched. Case-sensitive.                                                                                   |
+| **Full-text**  | `*:value`                | Search **across all fields**, including **log messages, tags, and attributes**. Case-insensitive for log messages, case-sensitive for tags/attributes. Matches substrings. |
+| **Wildcards**  | `*` and `?`              | Partial matches. `*` matches multiple characters, `?` matches a single character. Works in **log messages** and attribute values. Wildcards do **not** work inside quotes. |
+| **Phrases**    | `"multiple words"`       | Exact phrase search. Searches **log messages** only. Spaces and special characters are treated literally inside quotes.                                                    |
+| **Boolean**    | `AND, OR, -`             | Combine or exclude terms. Applies to **log messages by default**. `AND` ensures both terms exist, `OR` allows either, `-` excludes terms.                                  |
+| **CIDR**       | `CIDR(attribute, block)` | Filter IP ranges. Only searches **attributes containing IPs**. Supports IPv4 and IPv6.                                                                                     |
+
+
 
 > **Case behavior**:
 >
