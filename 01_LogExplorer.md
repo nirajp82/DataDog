@@ -36,6 +36,7 @@ Log Explorer lets you search logs using:
 | **Phrases**    | `"multiple words"`       | Exact phrase search. Searches **log messages** only. Spaces and special characters are treated literally inside quotes.                                                                     |
 | **Boolean**    | `AND, OR, -`             | Combine or exclude terms. Applies to **log messages by default**. `AND` ensures both terms exist, `OR` allows either, `-` excludes terms.                                                   |
 | **CIDR**       | `CIDR(attribute, block)` | Filter IP ranges. Only searches **attributes containing IPs**. Supports IPv4 and IPv6.                                                                                                      |
+<img width="728" height="483" alt="image" src="https://github.com/user-attachments/assets/419997df-11be-466f-bc78-518d8a2b89a9" />
 
 > **Case behavior**:
 >
