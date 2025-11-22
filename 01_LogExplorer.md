@@ -1,4 +1,4 @@
-# ✅ **Log Explorer
+# Log Explorer
 
 Log Explorer is the central interface for querying, filtering, and analyzing your ingested logs.
 This documentation explains **all supported search syntax**, including tags, attributes, full-text search, Boolean logic, CIDR queries, wildcards, numerical filters, and more.
