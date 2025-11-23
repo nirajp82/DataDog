@@ -1,18 +1,27 @@
-## **What is a Transaction?**
+## What is a Transaction?
 
-**Transactions** group together logs that are part of the same sequence of events, such as a user session or a request that passes through multiple services.
-
-Unlike normal grouping, transaction grouping includes not just the logs that match your search, but **all logs that are part of the related sequence**, giving you a complete picture of the activity.
+A **transaction** groups together logs that are all part of the same sequence of events, such as a user session or a request moving across multiple services. Unlike a standard group-by, transactions include **all logs that belong to the related activity**, not just those matching your search. This gives you a complete view of what happened.
 
 **Example:**
-A customer browsing an e-commerce website might create multiple logs:
+A customer on an e-commerce site might generate these logs:
 
 * Search for a product
 * View product details
 * Add product to cart
 * Checkout
 
-All these logs share a common **orderId** or **requestId**. Datadog can group them into a **transaction** to view the entire customer activity as one unit.
+All these logs share a common **orderId** or **requestId**, so Datadog can group them into a single transaction for analysis.
+
+**Realistic Scenario:**
+
+* `service:cart-checkout` with `@customer.id:109` and `@checkout_status:ABANDONED`
+* Logs captured:
+
+  1. Added item to cart
+  2. Updated item quantity
+  3. Viewed cart summary
+  4. Checkout abandoned
+* All these logs form one transaction showing the full journey of the abandoned checkout.
 
 ---
 
@@ -27,7 +36,7 @@ All these logs share a common **orderId** or **requestId**. Datadog can group th
   <img width="1808" height="933" alt="image" src="https://github.com/user-attachments/assets/0d7f7fbe-fe30-4263-b991-d19600773999" />
 ### **Example:**
 
-You search for logs with the keyword **"ERROR"**.
+Logs:
 
 | Log # | order_id | message                 |
 | ----- | -------- | ----------------------- |
@@ -39,68 +48,63 @@ You search for logs with the keyword **"ERROR"**.
 | 6     | 123      | Payment success         |
 
 * **Group By order_id** (matching logs only):
+  | order_id | count of error logs |
+  |----------|-------------------|
+  | 123      | 1                 |
 
-| order_id | count of error logs |
-| -------- | ------------------- |
-| 123      | 1                   |
+* **Transaction (grouped by order_id):**
+  | Log # | order_id | message                 |
+  |-------|----------|-------------------------|
+  | 1     | 123      | User searched for shoes |
+  | 2     | 123      | Added to cart           |
+  | 3     | 123      | Checkout started        |
+  | 4     | 123      | ERROR — payment failed  |
+  | 5     | 123      | Retry payment           |
+  | 6     | 123      | Payment success         |
 
-* **Transaction (grouped by order_id)**:
-
-| Log # | order_id | message                 |
-| ----- | -------- | ----------------------- |
-| 1     | 123      | User searched for shoes |
-| 2     | 123      | Added to cart           |
-| 3     | 123      | Checkout started        |
-| 4     | 123      | ERROR — payment failed  |
-| 5     | 123      | Retry payment           |
-| 6     | 123      | Payment success         |
-
-Transactions show **all related logs**, giving you the full context.
+Transactions give the **full context** for the activity.
 
 ---
 
-## **What can you measure in Transactions?**
+## What Can You Measure in Transactions?
 
-### **1. Duration**
+### 1. Duration
 
-Time between the first and last log in a transaction.
+Time between the first and last log in the transaction.
 
-### **2. Maximum Severity**
+### 2. Maximum Severity
 
-The highest severity found in any log within the transaction.
+Highest severity found in any log within the transaction.
 
-### **3. Key Items**
+### 3. Key Items
 
-For any string field, you can calculate:
+For string fields, calculate:
 
 * Count unique values
 * Latest value
 * Earliest value
 * Most frequent value
 
-### **4. Statistics for numerical fields**
+### 4. Statistics for Numbers
 
 Compute statistics like:
 
 * min, max, avg, sum, median
 * Percentiles: p75, p90, p95, p99
 
-### **5. Start and End Conditions**
+### 5. Start and End Conditions
 
-You can define **custom transaction boundaries**:
+Define custom transaction boundaries:
 
-* **Start condition:** e.g., "checkout-start" log
-* **End condition:** e.g., "checkout-complete" log
-
-This helps include only relevant logs for each transaction.
+* **Start condition:** e.g., "checkout-start"
+* **End condition:** e.g., "checkout-complete"
+  This ensures only relevant logs are included.
 
 ---
 
-## **Example Use Case**
+## Example Use Case: E-commerce Checkout
 
-**Scenario:** E-commerce checkout process
-
-Logs for a single order (`order_id = 987`):
+Logs for `order_id = 987`:
 
 1. Search for shoes
 2. View product
@@ -110,27 +114,28 @@ Logs for a single order (`order_id = 987`):
 6. Retry payment
 7. Payment success
 
-**Transaction view:**
+**Transaction View:**
 
 * Duration: 12.4 seconds
-* Maximum severity: ERROR (from payment failed)
+* Maximum severity: ERROR
 * Count unique products viewed: 1
 * Total cart price: $85
-* All 7 logs are included
+* All 7 logs included
 
-This gives you the **complete picture of what happened** for one order, not just the error.
+This shows the **complete customer journey**, not just the error.
 
 ---
 
-## **Why use Transactions?**
+## Why Use Transactions?
 
-* Debug multi-step workflows easily
-* Trace activity across multiple microservices
+* Debug multi-step workflows
+* Trace activity across multiple services
 * Understand user behavior from start to finish
-* Measure performance and duration of key activities
+* Measure performance and duration
 * Detect patterns in failures or errors
 
 ---
 
 **Summary:**
-Transactions in Datadog let you group related logs together, measure key metrics, and get the full context for each activity. Unlike normal Group By aggregations, transactions include all logs in the activity, even if they do not match your query, making it easier to analyze complex workflows.
+Transactions let you group related logs into a single, coherent view. Unlike normal Group By aggregations, they include all logs in the activity, giving you **full context** for better debugging, analysis, and visualization.
+
