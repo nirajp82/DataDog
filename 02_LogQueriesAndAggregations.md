@@ -227,7 +227,7 @@ service:cart-logger AND @checkout_status:failed
   - Fields aggregations support one group by dimension for the Top List visualization, and up to four groups by dimensions for the Timeseries, Table, Tree Map, and Pie Chart visualizations.
   - You can add more group by dimensions by clicking the + sign next to the by field. The first by value will be the primary grouping, the second by value will be the secondary grouping, and so on.
 
-  - Q: Build the following query and visualize the results as a table.
+  - Q1: Build the following query and visualize the results as a table.
 
     Search for service:cart-checkout
 
@@ -236,6 +236,10 @@ service:cart-logger AND @checkout_status:failed
     In this case, you've created a table of the quantity of items and total price of each cart that a customer checks out.
 
     <img width="1786" height="776" alt="image" src="https://github.com/user-attachments/assets/f93686e7-1cf3-4c83-b47e-62d70e0d1b2b" />
+
+  - Q2: Now, build a table that lists the count unique of Cart ID and the sum of Cart Totals by Customer ID and Checkout Status.
+
+
 
     
 ### References
