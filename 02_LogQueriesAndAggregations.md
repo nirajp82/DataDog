@@ -255,4 +255,15 @@ service:cart-logger AND @checkout_status:failed
 
 
     ### References
-https://learn.datadoghq.com/courses/enhance-log-querying
+- https://learn.datadoghq.com/courses/enhance-log-querying
+- https://docs.datadoghq.com/logs/explorer/search_syntax/
+- https://docs.datadoghq.com/logs/explorer/facets/
+- https://docs.datadoghq.com/logs/explorer/visualize/
+- https://docs.datadoghq.com/logs/explorer/analytics/
+- https://docs.datadoghq.com/logs/explorer/analytics/#group-logs-by-fields
+- https://docs.datadoghq.com/logs/explorer/analytics/#functions
+- https://docs.datadoghq.com/logs/explorer/analytics/patterns/
+- https://docs.datadoghq.com/logs/explorer/analytics/transactions/
+- https://www.datadoghq.com/blog/log-functions-formulas/
+- https://www.datadoghq.com/blog/log-patterns/
+- https://www.datadoghq.com/blog/pattern-inspector/
