@@ -45,12 +45,7 @@ After creating the chart, determine which country has the lowest total cart valu
 
     - Q3: Using the flagged_ip_addresses reference table and the service:webserver logs, create a bar chart that compares the number of flagged and not-flagged IP addresses seen in the service.
       <img width="1763" height="749" alt="image" src="https://github.com/user-attachments/assets/e9bae472-a89a-40a5-8d20-c35ab8274d4e" />
-
-      Showing all the data
-      <img width="1767" height="842" alt="image" src="https://github.com/user-attachments/assets/0280d754-a863-48e8-8815-2ef3fd925949" />
-
-
-
+     
 ## Subqueries
 
 Subqueries let you use the result of one log search to filter or refine another search. This is useful when working with related log sources.
@@ -59,8 +54,10 @@ Subqueries let you use the result of one log search to filter or refine another 
 
 **Example:**
 - Q: Create a timeseries graph for the percentage of products without a discount applied at checkout. Display the data as a line.
-  <img width="1769" height="869" alt="image" src="https://github.com/user-attachments/assets/94535db8-ff38-4903-bbe4-3cc5adeab74e" />
+   <img width="1769" height="869" alt="image" src="https://github.com/user-attachments/assets/94535db8-ff38-4903-bbe4-3cc5adeab74e" />
 
+   - Showing all the data
+   <img width="1767" height="842" alt="image" src="https://github.com/user-attachments/assets/0280d754-a863-48e8-8815-2ef3fd925949" />
 ---
 
 ## Calculated Fields
