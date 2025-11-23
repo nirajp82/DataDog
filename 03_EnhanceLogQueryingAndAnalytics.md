@@ -54,7 +54,8 @@ Subqueries let you use the result of one log search to filter or refine another 
 **Use case:** Connect and analyze relationships between two different sets of logs.
 
 **Example:**
-Identify customer IDs associated with checkout failures, then use those same customer IDs to search through webserver access logs to understand what led to the failure.
+- Q: Create a timeseries graph for the percentage of products without a discount applied at checkout. Display the data as a line.
+  <img width="1769" height="869" alt="image" src="https://github.com/user-attachments/assets/94535db8-ff38-4903-bbe4-3cc5adeab74e" />
 
 ---
 
