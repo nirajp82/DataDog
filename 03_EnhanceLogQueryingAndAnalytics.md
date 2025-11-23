@@ -1,32 +1,40 @@
-## **Enhance Log Querying and Analytics with Reference Tables, Subqueries, and Calculated Fields**
+# Enhance Log Querying and Analytics with Reference Tables, Subqueries, and Calculated Fields
 
-When working with logs, you’ll often need more than basic searching and aggregations. Sometimes you need to enrich logs with external data, connect one set of logs to another, or generate new values that don’t already exist in the logs. Datadog provides three powerful features that make this possible: **Reference Tables**, **Subqueries**, and **Calculated Fields**. Together, these tools help you analyze logs with deeper context, build smarter queries, and uncover insights that aren’t visible from raw log data alone.
+When working with logs, you often need more than simple searching and aggregations. Sometimes you need to enrich logs with external data, connect separate log streams, or generate new values that don’t already exist in your logs. Datadog provides three powerful features that enable these deeper insights: **Reference Tables**, **Subqueries**, and **Calculated Fields**.
 
-### **1. Reference Tables**
+These tools expand how you analyze and understand log data, making it possible to create richer queries, build meaningful visualizations, and derive insights that raw logs alone cannot provide.
 
-Reference Tables let you upload external data—such as CSV files, lookup lists, or metadata—and join it with your logs. This allows you to enrich logs with additional context.
+## Reference Tables
+
+Reference Tables allow you to upload external data—such as CSV files, metadata lists, or lookup tables—and join that information with your logs.
+
+**Use case:** Enrich logs with additional context that isn’t originally included.
 
 **Example:**
-Upload a table of product names and product IDs, then join it with your logs so that product ID fields automatically display the product name.
+Upload a table containing product names and product IDs. Joining this table with your logs lets you see product names whenever a product ID appears in log entries.
 
 ---
 
-### **2. Subqueries**
+## Subqueries
 
-Subqueries allow you to use the result of one log search to filter or refine another search. This is useful when two types of logs are related and you want to connect their data.
+Subqueries let you use the result of one log search to filter or refine another search. This is useful when working with related log sources.
+
+**Use case:** Connect and analyze relationships between two different sets of logs.
 
 **Example:**
-Find customer IDs involved in checkout failures, then use those IDs to search through webserver logs to find what happened before the failure.
+Identify customer IDs associated with checkout failures, then use those same customer IDs to search through webserver access logs to understand what led to the failure.
 
 ---
 
-### **3. Calculated Fields**
+## Calculated Fields
 
-Calculated Fields let you create new fields based on existing tags or attributes in your logs. This is useful for generating metrics or values that aren’t originally recorded.
+Calculated Fields let you generate new values based on existing attributes in your logs.
+
+**Use case:** Create metrics or computed values not originally logged.
 
 **Example:**
-Compute a new field called “profit” by subtracting cost from revenue, even if profit is not directly logged.
+If revenue and cost are logged separately, you can create a new field called **profit** by calculating `revenue - cost`, even though the profit field never existed in the original logs.
 
 ---
 
-These features make your log analysis more flexible and powerful, enabling deeper insights and more meaningful visualizations as you work with Datadog Log Explorer.
+These three features—Reference Tables, Subqueries, and Calculated Fields—extend what you can do inside Log Explorer, enabling more insightful queries, flexible analysis, and enhanced visualizations.
