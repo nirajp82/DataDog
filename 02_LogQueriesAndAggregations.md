@@ -164,6 +164,11 @@ service:cart-logger AND @checkout_status:failed
 - Create a timeseries chart displaying the count of unique(`Count unique of`) `cart_id` for `service:cart-checkout`, using a 10-second rollup to aggregate and show the number of cart checkouts in each interval.
   <img width="1906" height="896" alt="image" src="https://github.com/user-attachments/assets/8298055b-ec23-48d1-aab5-2876b0f5b8b0" />
 
-- 
+- Create a Top List showing the sum of `cart_total` for carts with `@item_quantity` between 3 and 5 Aggregate by `@item_quantity` and display only the top 2 values. This chart highlights the relationship between the number of items in a cart and the total cart value. 
+  <img width="1898" height="445" alt="image" src="https://github.com/user-attachments/assets/6667043d-ecf3-4ac7-a7d3-4a02e1c376a2" />
+  
+  <img width="1909" height="477" alt="image" src="https://github.com/user-attachments/assets/e4cae831-7c95-4e98-97a1-ad76a72da634" />
+
+
 ### References
 https://learn.datadoghq.com/courses/enhance-log-querying
