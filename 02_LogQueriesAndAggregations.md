@@ -241,7 +241,13 @@ service:cart-logger AND @checkout_status:failed
 
     <img width="1746" height="807" alt="image" src="https://github.com/user-attachments/assets/8689a33b-6706-48db-93e2-e15d86ebaba0" />
 
+## Alias a Facet
+  - Sometimes your logs use different names for things that mean the same thing. For example, one log might use @cart.url and another might use @http.url_path, even though both are basically referring to a URL.
+  - To make your searches easier, you can alias one attribute to another.
+  
+    Aliasing means: “Treat this attribute as if it were that other attribute.”
 
-    
-### References
+    So if you alias @cart.url → @http.url_path, then anytime you search using @http.url_path, Datadog will also include the values from @cart.url.
+
+    ### References
 https://learn.datadoghq.com/courses/enhance-log-querying
