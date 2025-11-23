@@ -15,17 +15,16 @@ A customer browsing an e-commerce website might create multiple logs:
 All these logs share a common **orderId** or **requestId**. Datadog can group them into a **transaction** to view the entire customer activity as one unit.
 
 ---
-<img width="1761" height="403" alt="image" src="https://github.com/user-attachments/assets/79a99e9c-fb61-4f4f-a329-a6b42d2d12f0" />
-<img width="1787" height="413" alt="image" src="https://github.com/user-attachments/assets/938d6506-b77a-4911-be5c-6d31aff2e44a" />
-<img width="1808" height="933" alt="image" src="https://github.com/user-attachments/assets/0d7f7fbe-fe30-4263-b991-d19600773999" />
-
-
 
 ## **Why are Transactions different from normal "Group By"?**
 
 * **Group By:** Only groups logs that **match your search query**.
-* **Transactions:** Groups **all logs related to the activity**, even if some logs do not match the query.
+  <img width="1761" height="403" alt="image" src="https://github.com/user-attachments/assets/79a99e9c-fb61-4f4f-a329-a6b42d2d12f0" />
+  <img width="1818" height="529" alt="image" src="https://github.com/user-attachments/assets/6640e197-a1e9-4d98-99ba-765696e2bc54" />
 
+* **Transactions:** Groups **all logs related to the activity**, even if some logs do not match the query.
+  <img width="1787" height="413" alt="image" src="https://github.com/user-attachments/assets/938d6506-b77a-4911-be5c-6d31aff2e44a" />
+  <img width="1808" height="933" alt="image" src="https://github.com/user-attachments/assets/0d7f7fbe-fe30-4263-b991-d19600773999" />
 ### **Example:**
 
 You search for logs with the keyword **"ERROR"**.
