@@ -221,7 +221,7 @@ service:cart-logger AND @checkout_status:failed
 
   Show Sum of Product Quantity and Sum of Product Subtotal and Sum of Product Total by Product ID limit to top 10 sorted by Sum of Product Total
 
-
+  <img width="1775" height="668" alt="image" src="https://github.com/user-attachments/assets/c04e4892-9314-4be5-aea0-2c85d1f8dd4c" />
 
 
 ### References
