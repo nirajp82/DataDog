@@ -171,6 +171,9 @@ service:cart-logger AND @checkout_status:failed
 
 - Find the minimum number of items in a cart required to reach a cart_total of 500 or more
   <img width="1908" height="723" alt="image" src="https://github.com/user-attachments/assets/dc430cbe-a1c4-4243-ba9e-997bdc2d5881" />
+  A minimum of 3 or 4 items in a cart are needed for a cart total of greater than or equal to 500.
+
+
 
 
 ### References
