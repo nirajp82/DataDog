@@ -17,6 +17,8 @@ Upload a CSV containing flagged IP addresses with the columns id and ip_address.
 
 <img width="1534" height="497" alt="image" src="https://github.com/user-attachments/assets/04e63044-e989-4076-8b08-5958448306ce" />
 
+In the example below, IP address data from the flagged_ip_addresses reference table is being used to search all recent service:webserver logs for malicious IP addresses. The service:webserver logs are joined with the flagged_ip_addresses table where the Client IP (@network.client.ip) attribute in the logs is in the ip_address column in the table. There are a few events that match this search.
+
 <img width="1520" height="755" alt="image" src="https://github.com/user-attachments/assets/75f5fc62-bea7-4de1-b3c4-88ef177bd3b0" />
 
 A corresponding SQL query would be as follows. (The syntax may not be exact.)
