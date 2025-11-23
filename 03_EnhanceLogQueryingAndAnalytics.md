@@ -59,12 +59,14 @@ Subqueries let you use the result of one log search to filter or refine another 
    - Showing all the data
    <img width="1767" height="842" alt="image" src="https://github.com/user-attachments/assets/0280d754-a863-48e8-8815-2ef3fd925949" />
 
-- Q:  When a cart checkout fails, a `service:cart-logger` log is created. Some customers may attempt checkout again, while others may cancel the checkout. Even if a customer cancels, all related checkout logs are       still generated, but the `service:cart-checkout` log will show the `checkout_status` as **ABANDONED**.
+-   When a cart checkout fails, a `service:cart-logger` log is created. Some customers may attempt checkout again, while others may cancel the checkout. Even if a customer cancels, all related checkout logs are       still generated, but the `service:cart-checkout` log will show the `checkout_status` as **ABANDONED**.
 
-    The goal is to **analyze how failed checkouts impact overall sales** by determining what portion of these carts are eventually **ABANDONED** versus **SUCCEEDED**.
+    - Q: **analyze how failed checkouts impact overall sales** by determining what portion of these carts are eventually **ABANDONED** versus **SUCCEEDED**.
 
-    Create a visualization (e.g., a Pie Chart) to show the **percentages of carts with `checkout_status` ABANDONED and SUCCEEDED**. This will help understand customer behavior after failed checkout attempts.
-    <img width="1126" height="554" alt="image" src="https://github.com/user-attachments/assets/4f68a33b-92a0-4610-a943-3cbb26a4751e" />
+      Create a visualization (e.g., a Pie Chart) to show the **percentages of carts with `checkout_status` ABANDONED and SUCCEEDED**. This will help understand customer behavior after failed checkout attempts.
+      <img width="1126" height="554" alt="image" src="https://github.com/user-attachments/assets/4f68a33b-92a0-4610-a943-3cbb26a4751e" />
+
+    - Q: Create a timeseries for the cumulative sum of cart totals for abandoned carts that results from failed checkouts over a period of 30 minutes.  
 
 ---
 
