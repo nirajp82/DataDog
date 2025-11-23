@@ -163,7 +163,7 @@ service:cart-logger AND @checkout_status:failed
 
 Build a timeseries showing the count of unique `cart_id` for `service:cart-checkout`, with the data aggregated using a rollup interval of 10 seconds to display the number of cart checkouts in each interval.
 
-<img width="1969" height="895" alt="image" src="https://github.com/user-attachments/assets/46fbf338-e5c3-4185-a694-65c7160ec8c3" />
+<img width="1906" height="896" alt="image" src="https://github.com/user-attachments/assets/8298055b-ec23-48d1-aab5-2876b0f5b8b0" />
 
 ### References
 https://learn.datadoghq.com/courses/enhance-log-querying
