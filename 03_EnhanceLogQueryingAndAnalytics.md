@@ -30,6 +30,14 @@ JOIN flagged_ip_addresses ON Client IP = ip_address
 ```
 ---
 
+- Example 2: Search for `service:cart-checkout` Inner join with reference table customer_list where field Customer ID IN column id and show columns name
+
+  <img width="1039" height="600" alt="image" src="https://github.com/user-attachments/assets/66902c66-a510-4ad2-807f-230848a5108b" />
+
+  Create a Top List of the top 10 sum of Cart Total by name. Which customer has the third highest cart total?
+
+  <img width="1760" height="504" alt="image" src="https://github.com/user-attachments/assets/99a1d6ce-77fa-48d5-9aa6-85164246a205" />
+
 ## Subqueries
 
 Subqueries let you use the result of one log search to filter or refine another search. This is useful when working with related log sources.
