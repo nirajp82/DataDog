@@ -234,6 +234,9 @@ service:cart-logger AND @checkout_status:failed
     Show Sum of Cart Item Quantity and Sum of Cart Total by Customer ID limit to top 10 and Cart ID limit to top 10
 
     In this case, you've created a table of the quantity of items and total price of each cart that a customer checks out.
+
+    <img width="1786" height="776" alt="image" src="https://github.com/user-attachments/assets/f93686e7-1cf3-4c83-b47e-62d70e0d1b2b" />
+
     
 ### References
 https://learn.datadoghq.com/courses/enhance-log-querying
