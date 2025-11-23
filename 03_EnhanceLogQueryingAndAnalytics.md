@@ -11,7 +11,13 @@ Reference Tables allow you to upload external data—such as CSV files, metadata
 **Use case:** Enrich logs with additional context that isn’t originally included.
 
 **Example:**
-Upload a table containing product names and product IDs. Joining this table with your logs lets you see product names whenever a product ID appears in log entries.
+Upload a CSV containing flagged IP addresses with the columns id and ip_address. Joining this table with your logs lets you easily identify when a log entry contains an IP address that appears in the flagged list.
+
+<img width="1566" height="404" alt="image" src="https://github.com/user-attachments/assets/4fca6bfa-7c95-43f7-8580-3284290963a8" />
+
+<img width="1534" height="497" alt="image" src="https://github.com/user-attachments/assets/04e63044-e989-4076-8b08-5958448306ce" />
+
+<img width="1520" height="755" alt="image" src="https://github.com/user-attachments/assets/75f5fc62-bea7-4de1-b3c4-88ef177bd3b0" />
 
 ---
 
