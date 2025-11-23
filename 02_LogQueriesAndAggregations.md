@@ -175,6 +175,7 @@ service:cart-logger AND @checkout_status:failed
   A minimum of 3 or 4 items in a cart are needed for a cart total of greater than or equal to 500.
 
 - Determine which 5 products people typically add in the largest quantities when they place them in their cart. After identifying these top 5 products, change the sorting method so that instead of ranking them by average quantity per cart, they are ranked by total quantity added. Observe how the top 5 products change when switching from average to total.
+  - service:product-checkout   
 
 
 
