@@ -46,6 +46,10 @@ After creating the chart, determine which country has the lowest total cart valu
     - Q3: Using the flagged_ip_addresses reference table and the service:webserver logs, create a bar chart that compares the number of flagged and not-flagged IP addresses seen in the service.
       <img width="1763" height="749" alt="image" src="https://github.com/user-attachments/assets/e9bae472-a89a-40a5-8d20-c35ab8274d4e" />
 
+      Showing all the data
+      <img width="1767" height="842" alt="image" src="https://github.com/user-attachments/assets/0280d754-a863-48e8-8815-2ef3fd925949" />
+
+
 
 ## Subqueries
 
