@@ -34,9 +34,14 @@ JOIN flagged_ip_addresses ON Client IP = ip_address
 
   <img width="1039" height="600" alt="image" src="https://github.com/user-attachments/assets/66902c66-a510-4ad2-807f-230848a5108b" />
 
-  Create a Top List of the top 10 sum of Cart Total by name. Which customer has the third highest cart total?
+  - Q1: Create a Top List of the top 10 sum of Cart Total by name. Which customer has the third highest cart total?
 
-  <img width="1760" height="504" alt="image" src="https://github.com/user-attachments/assets/99a1d6ce-77fa-48d5-9aa6-85164246a205" />
+    <img width="1760" height="504" alt="image" src="https://github.com/user-attachments/assets/99a1d6ce-77fa-48d5-9aa6-85164246a205" />
+
+  - Q2: Create a scatter plot showing the top 10 countries based on the total cart value (sum of Cart Total) plotted against the total number of items added to the cart (sum of Cart Item Quantity).
+After creating the chart, determine which country has the lowest total cart value, and calculate its ratio of Cart Total to Cart Item Quantity.
+
+    <img width="1755" height="803" alt="image" src="https://github.com/user-attachments/assets/43fdf7ea-0ad9-44e5-bbd4-84c244dbc534" />
 
 ## Subqueries
 
