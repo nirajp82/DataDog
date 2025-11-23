@@ -161,7 +161,7 @@ service:cart-logger AND @checkout_status:failed
 
 ## Exercise
 
-- Create a timeseries chart displaying the count of unique(`Count unique of`) `cart_id` for `service:cart-checkout`, using a 10-second rollup to aggregate and show the number of cart checkouts in each interval.
+- Count how many unique carts are checked out in each 10-second interval and display it as a timeseries chart. (`Count unique of`) 
   <img width="1906" height="896" alt="image" src="https://github.com/user-attachments/assets/8298055b-ec23-48d1-aab5-2876b0f5b8b0" />
 
 - Find all carts between 3 to 5 items and determine which carts, based on their item quantity (Cart with total item 3, 4 or 5), have the highest total cart value.
