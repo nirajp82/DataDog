@@ -223,6 +223,17 @@ service:cart-logger AND @checkout_status:failed
 
   <img width="1775" height="668" alt="image" src="https://github.com/user-attachments/assets/c04e4892-9314-4be5-aea0-2c85d1f8dd4c" />
 
+## Display hierarchical group by aggregations
+  - Fields aggregations support one group by dimension for the Top List visualization, and up to four groups by dimensions for the Timeseries, Table, Tree Map, and Pie Chart visualizations.
+  - You can add more group by dimensions by clicking the + sign next to the by field. The first by value will be the primary grouping, the second by value will be the secondary grouping, and so on.
 
+  - Q: Build the following query and visualize the results as a table.
+
+    Search for service:cart-checkout
+
+    Show Sum of Cart Item Quantity and Sum of Cart Total by Customer ID limit to top 10 and Cart ID limit to top 10
+
+    In this case, you've created a table of the quantity of items and total price of each cart that a customer checks out.
+    
 ### References
 https://learn.datadoghq.com/courses/enhance-log-querying
