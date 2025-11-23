@@ -162,54 +162,54 @@ service:cart-logger AND @checkout_status:failed
 ## Exercise
 
 - Count how many unique carts are checked out in each 10-second interval and display it as a timeseries chart. (`Count unique of`)
-- Ori. Question: Select Timeseries for Visualize as. Update the Display type for the Timeseries to Lines. Then, build the following query:
+  - Ori. Question: Select Timeseries for Visualize as. Update the Display type for the Timeseries to Lines. Then, build the following query:
 
-  Search for service:cart-checkout
+    Search for service:cart-checkout
 
-  Show Count unique of Cart ID by Everything rollup every 10s
+    Show Count unique of Cart ID by Everything rollup every 10s
 
-  The rollup interval is the interval of time your data is aggregated over to create a datapoint in the chart. In this case, you're viewing the number of cart checkouts for every 10 seconds.
+    The rollup interval is the interval of time your data is aggregated over to create a datapoint in the chart. In this case, you're viewing the number of cart checkouts for every 10 seconds.
 
-  <img width="1906" height="896" alt="image" src="https://github.com/user-attachments/assets/8298055b-ec23-48d1-aab5-2876b0f5b8b0" />
+    <img width="1906" height="896" alt="image" src="https://github.com/user-attachments/assets/8298055b-ec23-48d1-aab5-2876b0f5b8b0" />
 
 - Find all carts between 3 to 5 items and determine which carts, based on their item quantity (Cart with total item 3, 4 or 5), have the highest total cart value.
-- Ori. Question: Build the following query to create a Top List of the sum of cart totals.
+  - Ori. Question: Build the following query to create a Top List of the sum of cart totals.
 
-  Search for @item_quantity:[3 TO 5]
+    Search for @item_quantity:[3 TO 5]
 
-  Show Sum of Cart Total by @item_quantity limit top 2
+    Show Sum of Cart Total by @item_quantity limit top 2
 
-  This top list shows the relationship between item quantity in a cart and the cart total (price). Note that only 2 bars are displayed because you selected top 2. You can change the value to top 5 or to bottom 2 to see how the chart display changes.
+    This top list shows the relationship between item quantity in a cart and the cart total (price). Note that only 2 bars are displayed because you selected top 2. You can change the value to top 5 or to bottom 2 to see how the chart display changes.
 
-  <img width="1898" height="445" alt="image" src="https://github.com/user-attachments/assets/6667043d-ecf3-4ac7-a7d3-4a02e1c376a2" />
+    <img width="1898" height="445" alt="image" src="https://github.com/user-attachments/assets/6667043d-ecf3-4ac7-a7d3-4a02e1c376a2" />
   
-  <img width="1909" height="477" alt="image" src="https://github.com/user-attachments/assets/e4cae831-7c95-4e98-97a1-ad76a72da634" />
+    <img width="1909" height="477" alt="image" src="https://github.com/user-attachments/assets/e4cae831-7c95-4e98-97a1-ad76a72da634" />
 
 - Find the minimum number of items in a cart required to reach a cart_total of 500 or more
-- Ori. Question: Build a query to answer the following question:
+  - Ori. Question: Build a query to answer the following question:
 
-  What is the minimum number of items in a cart needed for a cart total of greater than or equal to 500? Display the data as a Timeseries chart with Bars.
+    What is the minimum number of items in a cart needed for a cart total of greater than or equal to 500? Display the data as a Timeseries chart with Bars.
 
-  Search for @cart_total:>=500
+    Search for @cart_total:>=500
 
-  Show Sum of Cart Total by @item_quantity limit to top 25 rollup every 5s
+    Show Sum of Cart Total by @item_quantity limit to top 25 rollup every 5s
 
-  <img width="1908" height="723" alt="image" src="https://github.com/user-attachments/assets/dc430cbe-a1c4-4243-ba9e-997bdc2d5881" />
+    <img width="1908" height="723" alt="image" src="https://github.com/user-attachments/assets/dc430cbe-a1c4-4243-ba9e-997bdc2d5881" />
 
-  Ori. Answer: A minimum of 3 or 4 items in a cart are needed for a cart total of greater than or equal to 500.
+    Ori. Answer: A minimum of 3 or 4 items in a cart are needed for a cart total of greater than or equal to 500.
 
 - Determine which 5 products people typically add in the largest quantities when they place them in their cart. After identifying these top 5 products, change the sorting method so that instead of ranking them by average quantity per cart, they are ranked by total quantity added. Observe how the top 5 products change when switching from average to total.
-- Ori. Question: Next, you're going to use the advanced options for limit to to sort the data displayed.
+  - Ori. Question: Next, you're going to use the advanced options for limit to to sort the data displayed.
 
-  - Build the following query to construct a Tree Map:
+    - Build the following query to construct a Tree Map:
 
-    Search for service:product-checkout
+      Search for service:product-checkout
 
-    Show Avg of Product Quantity by Product ID limit top 5
+      Show Avg of Product Quantity by Product ID limit top 5
 
-    The tree map displays the Product IDs with the top 5 average Product Quantity (the total number of unit items of a product in cart checkouts).
+      The tree map displays the Product IDs with the top 5 average Product Quantity (the total number of unit items of a product in cart checkouts).
 
-  - To adjust statistics for the Product Quantity that is used to sort the data, click the three vertical dots on the right of top 5. The default is sorted by Avg Product Unit Price. Update Avg to Sum to see how the sort order can affect the data that is displayed.
+    - To adjust statistics for the Product Quantity that is used to sort the data, click the three vertical dots on the right of top 5. The default is sorted by Avg Product Unit Price. Update Avg to Sum to see how the sort order can affect the data that is displayed.
 
 
 
