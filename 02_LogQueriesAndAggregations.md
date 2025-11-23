@@ -199,7 +199,17 @@ service:cart-logger AND @checkout_status:failed
   Ori. Answer: A minimum of 3 or 4 items in a cart are needed for a cart total of greater than or equal to 500.
 
 - Determine which 5 products people typically add in the largest quantities when they place them in their cart. After identifying these top 5 products, change the sorting method so that instead of ranking them by average quantity per cart, they are ranked by total quantity added. Observe how the top 5 products change when switching from average to total.
-  - service:product-checkout   
+- Ori. Question: Next, you're going to use the advanced options for limit to to sort the data displayed.
+
+  - Build the following query to construct a Tree Map:
+
+    Search for service:product-checkout
+
+    Show Avg of Product Quantity by Product ID limit top 5
+
+    The tree map displays the Product IDs with the top 5 average Product Quantity (the total number of unit items of a product in cart checkouts).
+
+  - To adjust statistics for the Product Quantity that is used to sort the data, click the three vertical dots on the right of top 5. The default is sorted by Avg Product Unit Price. Update Avg to Sum to see how the sort order can affect the data that is displayed.
 
 
 
