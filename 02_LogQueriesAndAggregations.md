@@ -249,5 +249,10 @@ service:cart-logger AND @checkout_status:failed
 
     So if you alias @cart.url → @http.url_path, then anytime you search using @http.url_path, Datadog will also include the values from @cart.url.
 
+    - Q :Create a Table of the top 10 counts of all logs from service:(webserver OR cart-logger) grouped by URL Path, by Service, and by Status.
+      <img width="1743" height="771" alt="image" src="https://github.com/user-attachments/assets/2c4c2101-51d7-474c-8ca7-e12402f6c7c3" />
+
+
+
     ### References
 https://learn.datadoghq.com/courses/enhance-log-querying
