@@ -211,6 +211,17 @@ service:cart-logger AND @checkout_status:failed
 
     - To adjust statistics for the Product Quantity that is used to sort the data, click the three vertical dots on the right of top 5. The default is sorted by Avg Product Unit Price. Update Avg to Sum to see how the sort order can affect the data that is displayed.
 
+  <img width="1905" height="740" alt="image" src="https://github.com/user-attachments/assets/54ef7741-b594-4275-a20d-3c8ba916a8d5" />
+
+- Ori. Question: To build the next query, you're going to use wildcards in the search term and display the statistics for multiple attributes in a table.
+
+  Create a table for top 10 products with product IDs that start with the digits 1 or 44. The table should display the average of Product Unit Price, the sum of Product Quantity, and the sum of Product Total. The statistics should be listed by Product ID.
+
+  Search for @product.id:(1* OR 44*)
+
+  Show Sum of Product Quantity and Sum of Product Subtotal and Sum of Product Total by Product ID limit to top 10 sorted by Sum of Product Total
+
+
 
 
 ### References
