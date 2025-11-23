@@ -169,6 +169,9 @@ service:cart-logger AND @checkout_status:failed
   
   <img width="1909" height="477" alt="image" src="https://github.com/user-attachments/assets/e4cae831-7c95-4e98-97a1-ad76a72da634" />
 
+- Find the minimum number of items in a cart required to reach a cart_total of 500 or more
+  <img width="1908" height="723" alt="image" src="https://github.com/user-attachments/assets/dc430cbe-a1c4-4243-ba9e-997bdc2d5881" />
+
 
 ### References
 https://learn.datadoghq.com/courses/enhance-log-querying
