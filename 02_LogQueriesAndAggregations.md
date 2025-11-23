@@ -239,6 +239,7 @@ service:cart-logger AND @checkout_status:failed
 
   - Q2: Now, build a table that lists the count unique of Cart ID and the sum of Cart Totals by Customer ID and Checkout Status.
 
+    <img width="1746" height="807" alt="image" src="https://github.com/user-attachments/assets/8689a33b-6706-48db-93e2-e15d86ebaba0" />
 
 
     
