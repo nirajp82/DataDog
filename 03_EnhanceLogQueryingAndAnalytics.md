@@ -19,6 +19,13 @@ Upload a CSV containing flagged IP addresses with the columns id and ip_address.
 
 <img width="1520" height="755" alt="image" src="https://github.com/user-attachments/assets/75f5fc62-bea7-4de1-b3c4-88ef177bd3b0" />
 
+A corresponding SQL query would be as follows. (The syntax may not be exact.)
+
+```sql
+SELECT *
+FROM service:webserver
+JOIN flagged_ip_addresses ON Client IP = ip_address
+```
 ---
 
 ## Subqueries
