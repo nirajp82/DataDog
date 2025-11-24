@@ -3,7 +3,7 @@
 When working with logs, you often need more than simple searching and aggregations. Sometimes you need to enrich logs with external data, connect separate log streams, or generate new values that don’t already exist in your logs. Datadog provides three powerful features that enable these deeper insights: **Reference Tables**, **Subqueries**, and **Calculated Fields**.
 
 These tools expand how you analyze and understand log data, making it possible to create richer queries, build meaningful visualizations, and derive insights that raw logs alone cannot provide.
-
+---
 ## Reference Tables
 
 Reference Tables allow you to upload external data—such as CSV files, metadata lists, or lookup tables—and join that information with your logs.
@@ -73,10 +73,25 @@ Subqueries let you use the result of one log search to filter or refine another 
 
 ## Calculated Fields
 
-Calculated Fields let you generate new values based on existing attributes in your logs.
+Calculated Fields in Datadog let you create temporary, custom fields from existing log data while working in Log Explorer. These fields behave like normal log attributes, which means you can use them for searching, aggregating, visualizing, or even building other calculated fields.
 
-**Use case:** Create metrics or computed values not originally logged.
+Calculated fields are temporary, visible only to you, and ideal for retroactive analysis because they can be applied to logs that have already been indexed. You reference them with a # prefix in queries, aggregations, or other calculations, and you can create up to five calculated fields at a time.
 
+### Types of Calculated Fields
+
+1. **Formula**
+
+   * Use formulas to create new values from existing attributes.
+   * You can perform arithmetic, manipulate text, or use conditional logic.
+   * Example: `#latency_gap = @client_latency - @server_latency`
+
+2. **Extraction**
+
+   * Use Grok parsing rules to extract values from raw log messages or attributes.
+   * Works retroactively on indexed logs without changing pipelines.
+   * For example, given a log line like `country=Brazil duration=123ms path=/index.html status=200 OK`, you can use a Grok extraction rule such as `country=%{WORD:country} duration=%{INTEGER:duration} path=%{NOTSPACE:request_path} status=%{DATA:status}` to create calculated fields on the fly. This produces `#country = Brazil`, `#duration = 123`, `#request_path = /index.html`, and `#status = 200 OK`, allowing you to analyze log data without modifying your ingestion pipeline.
+
+     
 **Example:**
 If revenue and cost are logged separately, you can create a new field called **profit** by calculating `revenue - cost`, even though the profit field never existed in the original logs.
 
