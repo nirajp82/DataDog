@@ -91,3 +91,10 @@ Calculated fields are temporary, visible only to you, and ideal for retroactive 
    * Works retroactively on indexed logs without changing pipelines.
    * For example, given a log line like `country=Brazil duration=123ms path=/index.html status=200 OK`, you can use a Grok extraction rule such as `country=%{WORD:country} duration=%{INTEGER:duration} path=%{NOTSPACE:request_path} status=%{DATA:status}` to create calculated fields on the fly. This produces `#country = Brazil`, `#duration = 123`, `#request_path = /index.html`, and `#status = 200 OK`, allowing you to analyze log data without modifying your ingestion pipeline.
 
+  - Q1: Create a Top List of the bottom 10 sum of discount values (Define formula as `@subtotal - @total`) by product ID. Do not include product checkouts with discount values of 0.
+
+    <img width="662" height="384" alt="image" src="https://github.com/user-attachments/assets/45e61bb1-910b-48c0-8e05-abc511dd0122" />
+
+    <img width="1747" height="791" alt="image" src="https://github.com/user-attachments/assets/dcfa55b1-a587-404d-8312-0c722a057ab3" />
+
+
