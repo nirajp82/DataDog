@@ -91,10 +91,3 @@ Calculated fields are temporary, visible only to you, and ideal for retroactive 
    * Works retroactively on indexed logs without changing pipelines.
    * For example, given a log line like `country=Brazil duration=123ms path=/index.html status=200 OK`, you can use a Grok extraction rule such as `country=%{WORD:country} duration=%{INTEGER:duration} path=%{NOTSPACE:request_path} status=%{DATA:status}` to create calculated fields on the fly. This produces `#country = Brazil`, `#duration = 123`, `#request_path = /index.html`, and `#status = 200 OK`, allowing you to analyze log data without modifying your ingestion pipeline.
 
-     
-**Example:**
-If revenue and cost are logged separately, you can create a new field called **profit** by calculating `revenue - cost`, even though the profit field never existed in the original logs.
-
----
-
-These three features—Reference Tables, Subqueries, and Calculated Fields—extend what you can do inside Log Explorer, enabling more insightful queries, flexible analysis, and enhanced visualizations.
