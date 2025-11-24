@@ -66,7 +66,8 @@ Subqueries let you use the result of one log search to filter or refine another 
       Create a visualization (e.g., a Pie Chart) to show the **percentages of carts with `checkout_status` ABANDONED and SUCCEEDED**. This will help understand customer behavior after failed checkout attempts.
       <img width="1126" height="554" alt="image" src="https://github.com/user-attachments/assets/4f68a33b-92a0-4610-a943-3cbb26a4751e" />
 
-    - Q: Create a timeseries for the cumulative sum of cart totals for abandoned carts that results from failed checkouts over a period of 30 minutes.  
+    - Q: Create a timeseries for the `Cumulative Sum` (in the Arithmetic catergory) of cart totals for abandoned carts that results from failed checkouts over a period of 30 minutes.  
+      <img width="1759" height="616" alt="image" src="https://github.com/user-attachments/assets/651e26e7-dc02-458a-863b-0ff31f0f1b23" />
 
 ---
 
