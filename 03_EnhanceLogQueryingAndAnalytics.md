@@ -97,4 +97,9 @@ Calculated fields are temporary, visible only to you, and ideal for retroactive 
 
     <img width="1747" height="791" alt="image" src="https://github.com/user-attachments/assets/dcfa55b1-a587-404d-8312-0c722a057ab3" />
 
+  - Q2 Create a Timeseries of the Pc90 of checkout duration (`round((@checkout_time - @start_time)/60,2)`) by checkout status with a rollup of 1m. What is the trend that you observe?
+    Abandoned carts generally have higher Pc90 checkout durations over a 1-minute rollup period compared to suceeded carts. (Your plot will show a similar trend, even if the values differ.)
+    
+    <img width="1742" height="677" alt="image" src="https://github.com/user-attachments/assets/5346f4b2-8cb2-4a83-945d-cb0562117d4a" />
+
 
