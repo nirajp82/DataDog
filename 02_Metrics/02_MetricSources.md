@@ -8,10 +8,10 @@ Datadog can collect, aggregate, visualize, and alert on a very large variety of 
 
 Datadog metrics come from the following primary sources:
 
-* **Datadog Agent**
-* **Agent-based Integrations**
+* **Datadog Agent**: The Datadog Agent is installed on a server or container to collect system-level metrics like CPU, memory, disk, and network. It sends this data directly to Datadog for monitoring.
+* **Agent-based Integrations**: These are plugins that run with the Datadog Agent (on top of the Datadog Agent) to collect detailed metrics from services running on the same machine, such as NGINX, MySQL, or Redis.
 * **DogStatsD (StatsD protocol)**
-* **Datadog Integrations (Cloud, SaaS, Tools)**
+* **Datadog Integrations (Cloud, SaaS, Tools)**: These integrations collect metrics from cloud platforms and SaaS tools using APIs, such as AWS, Azure, Slack, and PagerDuty, not from machine (without needing the Datadog Agent installed).
 * **Other Datadog Products**
 
   * Real User Monitoring (RUM)
