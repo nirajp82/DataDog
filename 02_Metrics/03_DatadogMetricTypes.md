@@ -174,13 +174,13 @@ This allows **global percentiles** like p95 and p99 across all servers.
 
 ## Quick Comparison Summary
 
-| Metric Type      | What It Shows                     | Example Use            |
-| ---------------- | --------------------------------- | ---------------------- |
-| **Count**        | Total events                      | Total errors today     |
-| **Rate**         | Events per second                 | Requests per second    |
-| **Gauge**        | Current value                     | CPU usage right now    |
-| **Histogram**    | Value distribution (per host)     | Request latency ranges |
-| **Distribution** | Global distribution (all systems) | Global p95 API latency |
+| Metric Type      | What It Shows                                | Example Use            | Explanation                                                                                                                                                                                                                                                                                    |
+| ---------------- | -------------------------------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Count**        | Total events over a period                   | Total errors today     | Shows **how many times an event occurred**. For example, if your application had 452 errors today, the count metric tracks that total. It’s cumulative, just adding events over time.                                                                                                          |
+| **Rate**         | Events per second                            | Requests per second    | Shows **how frequently an event is happening**. For example, if your API received 7,200 requests in 2 hours, the rate metric tells you it handled 1 request per second. It’s useful for monitoring traffic spikes or load patterns.                                                            |
+| **Gauge**        | Current value at a moment                    | CPU usage right now    | Shows the **current state of a metric**, not cumulative. For example, a gauge could show your server is using 65% CPU at this exact moment. The value changes constantly as conditions change.                                                                                                 |
+| **Histogram**    | Distribution of values (per host or service) | Request latency ranges | Shows **how values are spread across ranges** for a specific host/service. For example, if API request times range from 20ms to 250ms, a histogram groups them (0-50ms: 100 requests, 51-100ms: 80 requests, etc.) so you can see patterns like most requests being fast but a few being slow. |
+| **Distribution** | Aggregated distribution across all systems   | Global p95 API latency | Shows **how values are spread across all hosts, containers, or regions**. For example, if multiple servers handle requests, the distribution metric can tell you the 95th percentile latency across all servers globally, helping identify system-wide performance bottlenecks.                |
 
 ---
 
