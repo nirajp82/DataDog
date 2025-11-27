@@ -1,108 +1,218 @@
-## Metric Sources in Datadog (with StatsD Explained)
+## Datadog Metric Sources and Collection Methods
 
-Datadog can collect, aggregate, visualize, and alert on metrics from many different sources. These metrics come from agents, integrations, applications, logs, APIs, and other Datadog products. Together, they give you full visibility into your infrastructure, applications, and business performance.
-
----
-
-### The Datadog Agent
-
-The **Datadog Agent** is the primary and most common source of metrics. It runs on your hosts, virtual machines, or containers and automatically collects system-level data such as:
-
-* **Host metrics:** CPU usage, memory usage, disk usage, disk I/O, network traffic
-* **Container metrics:** Container CPU, memory, disk I/O, and network usage
-* **APM metrics:** Service latency, request counts, error rates
-* **Network metrics:** TCP connections, DNS queries
-
-Once installed, the Agent continuously sends these metrics to Datadog without any manual coding.
+Datadog can collect, aggregate, visualize, and alert on a very large variety of metrics. Metrics represent numeric measurements of your systems, applications, and business activity over time. 
 
 ---
 
-### Core Integrations and DogStatsD (StatsD Explained)
+## 1. Main Sources of Metrics in Datadog
 
-The Datadog Agent includes many **core integrations** that collect metrics from common tools like web servers, databases, and operating systems.
+Datadog metrics come from the following primary sources:
 
-The Agent also includes **DogStatsD**, which is Datadog’s implementation of the **StatsD protocol**.
+* **Datadog Agent**
+* **Agent-based Integrations**
+* **DogStatsD (StatsD protocol)**
+* **Datadog Integrations (Cloud, SaaS, Tools)**
+* **Other Datadog Products**
 
-#### What is StatsD?
+  * Real User Monitoring (RUM)
+  * Application Performance Monitoring (APM)
+  * Logs
+  * Processes
+  * Events
+* **Datadog API**
 
-**StatsD** is a lightweight protocol used by applications to send real-time metrics. Instead of waiting for the Agent to “pull” data, your application **actively pushes metrics** to Datadog using simple text messages over UDP or TCP.
+Each of these sources feeds numerical data into Datadog, where it can be stored, visualized, and alerting can be applied.
 
-With StatsD, an application can easily send:
+---
+
+## 2. The Datadog Agent (Primary Metric Source)
+
+The **Datadog Agent** is usually the first and most important source of metrics. It is a lightweight program installed on your:
+
+* Servers
+* Virtual machines
+* Containers
+* Kubernetes nodes
+
+Once installed, it **automatically collects and sends standard system and service metrics** to Datadog.
+
+### Host-Level Metrics Collected by the Agent
+
+* CPU usage
+* Memory usage
+* Disk usage
+* Disk I/O
+* Network traffic
+
+### Container Metrics
+
+* Container CPU
+* Container memory
+* Container disk I/O
+* Container network metrics
+
+### APM Metrics (via the Agent)
+
+* Service latency
+* Request volume
+* Error rates
+
+### Network Metrics
+
+* TCP connections
+* DNS queries
+
+These metrics are collected continuously and sent to Datadog without writing any custom code.
+
+---
+
+## 3. Core Integrations and DogStatsD
+
+### Core Integrations
+
+The Datadog Agent includes many **built-in (core) integrations**. These are officially developed and supported by Datadog and collect metrics from common tools such as:
+
+* Web servers
+* Databases
+* Caches
+* Operating systems
+
+The Agent runs these integrations and sends their metrics automatically to Datadog.
+
+---
+
+### DogStatsD and the StatsD Protocol (Important for Custom Metrics)
+
+Datadog bundles **DogStatsD** with the Agent. DogStatsD is Datadog’s implementation of the **StatsD protocol** and is mainly used to collect **custom application metrics**.
+
+#### What is the StatsD Protocol?
+
+StatsD is a **lightweight, text-based protocol** that applications use to send metrics in real time. Instead of Datadog pulling data, your application **pushes metrics** as simple text messages over UDP or TCP.
+
+With StatsD, applications typically send:
 
 * Counters (e.g., number of requests)
-* Gauges (e.g., current memory usage)
+* Gauges (e.g., current CPU usage)
 * Timers (e.g., request latency)
 * Histograms and distributions
 
+A StatsD server receives these metrics, aggregates them, and forwards them to a monitoring backend such as Datadog.
+
 #### What is DogStatsD?
 
-**DogStatsD** is Datadog’s enhanced version of StatsD. It:
+DogStatsD is Datadog’s enhanced version of StatsD. In addition to standard StatsD features, it supports:
 
-* Supports all standard StatsD metric types
-* Adds **Datadog-specific features** like tags, service context, and distributions
-* Sends the aggregated metrics directly to Datadog through the Agent
+* Tags
+* Service context
+* Distributions
+* Datadog-specific metric enhancements
 
-This makes DogStatsD the most common way to send **custom application metrics** to Datadog. For example, your application can report:
+DogStatsD is **the most common way to send custom business and application metrics** to Datadog, such as:
 
-* Number of user logins
-* Checkout success/failure counts
-* Payment processing time
-* Business KPIs
-
----
-
-### Datadog Integrations
-
-Datadog provides **800+ ready-made integrations** for platforms such as AWS, Azure, databases, messaging systems, and SaaS tools. There are three main integration types:
-
-* **Agent-based integrations:** Installed with the Datadog Agent
-* **API-based (crawler) integrations:** Datadog pulls metrics using your credentials
-* **Library integrations:** Added directly into your application code (Node.js, Python, etc.)
-
-These integrations allow you to collect metrics without building custom pipelines.
-
----
-
-### Metrics from Other Datadog Tools
-
-Datadog can also generate metrics from data collected by other Datadog products:
-
-* **Logs:** HTTP request counts, error rates, response success percentages
-* **APM:** Throughput, average latency, total requests per service
-* **RUM:** User sessions, page load time, session duration, browser performance
-
-This allows you to turn raw logs and traces into meaningful numerical metrics.
-
----
-
-### Custom Metrics
-
-Sometimes your business needs metrics that Datadog does not collect by default, such as:
-
-* Business KPIs
-* User registrations or logins
+* User signups
+* Checkout attempts
+* Payment failures
 * Feature usage
-* Custom performance indicators
-
-These **custom metrics** can be sent to Datadog using:
-
-* **DogStatsD (most common)**
-* **Datadog HTTP API**
-* **Custom Agent checks**
-* **Certain standard and Marketplace integrations**
 
 ---
 
-## Summary
+## 4. Datadog Integrations (Beyond the Agent)
 
-* The **Datadog Agent** collects system and service metrics automatically.
-* **DogStatsD (StatsD)** lets your applications push **custom real-time metrics** to Datadog.
-* **Integrations** collect metrics from cloud services and tools.
-* **Logs, APM, and RUM** can also generate metrics.
-* **Custom metrics** let you track business-specific data.
+Datadog provides **800+ ready-made integrations** for cloud platforms and third-party tools such as:
+
+* AWS
+* Azure
+* Slack
+* PagerDuty
+* Databases, queues, and messaging systems
+
+### Types of Datadog Integrations
+
+1. **Agent-Based Integrations**
+   Installed and run by the Datadog Agent on your host.
+
+2. **API-Based (Authentication / Crawler) Integrations**
+   Datadog connects to third-party services using API credentials and pulls metrics directly.
+
+3. **Library Integrations**
+   Added into application code (Node.js, Python, etc.) to send application-level telemetry.
 
 ---
 
-## What’s Next
+## 5. Metrics from Other Datadog Products
 
-Now that you understand where metrics come from and how StatsD fits in, the next step is learning about **metric types and formats**, followed by hands-on querying and visualization in Datadog.
+Datadog can **generate metrics from data already collected** by other parts of the platform.
+
+### From Logs
+
+You can turn logs into metrics such as:
+
+* Number of HTTP requests
+* Total API calls
+* Count of 500-level errors
+* Percentage of successful responses
+
+### From APM (Application Performance Monitoring)
+
+You can generate metrics from traces and spans, including:
+
+* Total requests
+* Average request duration
+* Transactions processed
+* Throughput per service
+
+### From RUM (Real User Monitoring)
+
+You can generate user-experience metrics such as:
+
+* Total user sessions
+* Page load time
+* Average session duration
+* Performance by browser type
+
+---
+
+## 6. Custom Metrics
+
+Even with Agents, integrations, logs, APM, and RUM, you often need **business-specific metrics**, such as:
+
+* KPIs
+* Custom algorithms
+* User registrations
+* Feature usage
+* Revenue-related events
+
+These are called **custom metrics**. They are not collected automatically—you write code to generate and send them.
+
+### Ways to Send Custom Metrics to Datadog
+
+* **Datadog API**
+  Use the HTTP API to submit metrics directly.
+
+* **DogStatsD (Most Common)**
+  Applications send metrics to DogStatsD, which forwards them through the Agent.
+
+* **Custom Agent Checks**
+  Write your own check that runs inside the Datadog Agent.
+
+* **Integrations**
+
+  * Some standard integrations can emit custom metrics.
+  * Some Marketplace integrations also support custom metrics.
+
+---
+
+## 7. What’s Next
+
+Now that you understand:
+
+* Where Datadog metrics come from
+* How the Agent, integrations, DogStatsD, and APIs work together
+
+The next step is to learn about:
+
+* **Metric types**
+* **Metric formats**
+* **How metrics are queried and visualized**
+
+After that, you will be ready for **hands-on labs** where you will explore, query, and visualize metrics directly in Datadog.
