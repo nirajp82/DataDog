@@ -1,4 +1,4 @@
-# Datadog Metrics – README
+# Datadog Metrics
 
 ## Overview
 
